@@ -1,25 +1,41 @@
 """
-=============
+================
 OLE2Reader
-=============
+================
 
 Python module for importing data from OLE 2 files.
+
+License
+----------------
+OLE2Reader is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+OLE2Reader is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with Chompack.  If not, see <http://www.gnu.org/licenses/>.    
 
 
 Requirements
 ----------------
 
 This module depends on the `JPype <http://jpype.readthedocs.org>`_
-Python extension and `Apache POI <http://poi.apache.org/download.html>`_, a
-Java implementation of the OLE 2 Compound Document format:
+Python extension, `Numpy <http://www.numpy.org>`_ and `Apache POI
+<http://poi.apache.org/download.html>`_, a Java implementation of the
+OLE 2 Compound Document format:  
 
   * Apache POI Java libray (version 3.11-beta or later to read 4GB+ files)
   * JPype Python extension (tested with version 0.5)
 
 JPype can be installed using pip:
 
-  $ pip install JPype1 --user
-
+  $ pip install JPype1
+  
   
 Getting started
 ----------------
@@ -46,22 +62,6 @@ of.close()
 OLE2Reader.shutdownJVM()
 ``` 
 """
-
-# Copyright 2014 M. Andersen
-# 
-# OLE2Reader is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 3 of the License, or
-# (at your option) any later version.
-#
-# OLE2Reader is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# 
-# You should have received a copy of the GNU General Public License
-# along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
 
 import jpype
 import numpy
