@@ -19,6 +19,11 @@ In addition to the [Apache POI Java library](http://poi.apache.org), the Python 
 pip install JPype1 numpy
 ```
 
+#### Installation
+```bash
+pip install https://github.com/martinandersen/OLE2Reader/archive/master.zip
+```
+
 #### Code example
 ```python
 # Import OLE2Reader and start Java Virtual Machine (JVM)
