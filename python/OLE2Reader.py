@@ -139,9 +139,8 @@ class OLE2File(object):
         stream = DocumentInputStream(e)
         stream.readFully(buf, 0, nbytes);
         stream.close();
-    
-        arr = numpy.frombuffer(buffer(buf.__str__()),dtype=numpy.dtype('uint16'))
-        arr = numpy.array(arr, numpy.dtype('uint8'))
+
+        arr = numpy.fromiter(buf,dtype='uint8')
         return arr
 
     def readString(self, entry):
