@@ -6,7 +6,7 @@ Python and Matlab code for importing data from OLE 2 files
 
 Getting started
 ---------------
-The code is based on the [Apache POI Java library](http://poi.apache.org). To get started, download a copy of the binary distribution [here](http://poi.apache.org/download.html). You'll need version 3.11-beta (or a later version) in order to read files that are larger than 4 GB.
+The code is based on the [Apache POI Java library](http://poi.apache.org). To get started, download a copy of the binary distribution [here](http://poi.apache.org/download.html). You'll need version 3.11-beta (or a later version) in order to read files that are larger than 2 GB.
 
 
 Python 2.7
