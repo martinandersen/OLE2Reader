@@ -141,7 +141,7 @@ class OLE2File(object):
         stream.close();
 
         java_str = jpype._jclass.JClass('java.lang.String')(buf, 'ISO-8859-1')        
-        arr = numpy.array(numpy.frombuffer(buffer(ss.toString()),dtype='uint16'),dtype='uint8')
+        arr = numpy.array(numpy.frombuffer(buffer(java_str.toString()),dtype='uint16'),dtype='uint8')
         return arr
 
     def readString(self, entry):
