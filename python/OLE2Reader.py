@@ -82,7 +82,7 @@ class OLE2File(object):
     libraries.
     """
 
-    def __init__(self, filename):
+    def __init__(self, filename, buffer_size = None):
         """Opens an OLE 2 file system."""
 
         self._filename = filename
@@ -91,6 +91,12 @@ class OLE2File(object):
         NPOIFSFileSystem = jpype.JPackage('org').apache.poi.poifs.filesystem.NPOIFSFileSystem
         self._fs = NPOIFSFileSystem(self._fp)
         self._root = self._fs.getRoot();
+        self._DocumentInputStream = jpype.JPackage('org').apache.poi.poifs.filesystem.DocumentInputStream
+        self._ByteBuffer = jpype.java.nio.ByteBuffer
+        self._buffer_size = buffer_size
+        if self._buffer_size is not None:
+            self._bb = self._ByteBuffer.allocate(self._buffer_size)        
+            self._buffer = self._bb.array()
         return
 
     def _getEntry(self, path):
@@ -131,16 +137,18 @@ class OLE2File(object):
         """
         e = self._getEntry(entry)
         nbytes = e.getSize()
-        ByteBuffer = jpype.java.nio.ByteBuffer
-        bb = ByteBuffer.allocate(nbytes)
-        buf = bb.array()
-        
-        DocumentInputStream = jpype.JPackage('org').apache.poi.poifs.filesystem.DocumentInputStream
-        stream = DocumentInputStream(e)
+        if self._buffer_size is not None:
+            if nbytes > self._buffer_size: raise BufferError
+            buf = self._buffer
+        else:
+            bb = self._ByteBuffer.allocate(nbytes)        
+            buf = bb.array()
+            
+        stream = self._DocumentInputStream(e)
         stream.readFully(buf, 0, nbytes);
         stream.close();
 
-        java_str = jpype._jclass.JClass('java.lang.String')(buf, 'ISO-8859-1')        
+        java_str = jpype._jclass.JClass('java.lang.String')(buf, 0, nbytes, 'ISO-8859-1')        
         arr = numpy.array(numpy.frombuffer(buffer(java_str.toString()),dtype='uint16'),dtype='uint8')
         return arr
 
@@ -149,7 +157,7 @@ class OLE2File(object):
         Reads a document entry from the OLE 2 file system and returns
         the data as a string.
         """
-        return str(buffer(self.readBytes(entry))).strip(u'\x00')
+        return str(buffer(self.readBytes(entry)))
 
     def readShort(self, entry):
         """
@@ -170,7 +178,6 @@ class OLE2File(object):
         Reads a document entry from the OLE 2 file system and returns
         the data as a Numpy array of 32 bit floats.
         """
-
         return numpy.frombuffer(buffer(self.readBytes(entry)),dtype='<f')
 
     def close(self):
