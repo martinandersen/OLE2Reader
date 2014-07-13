@@ -10,6 +10,6 @@ setup(name='OLE2Reader',
     license = 'GNU GPL version 3',
     package_dir = {"": "python"},
     packages = [""],
-    install_requires=["JPype1","Numpy"],
+    requires=["JPype1","Numpy"],
     classifiers=['Development Status :: 4 - Beta',
                  'Programming Language :: Python'])
