@@ -12,8 +12,8 @@ function varargout = ole2_ls(filename, d)
 %    D = OLE2_LS(filename,d) returns a struct array D with the
 %    entries in the directory d.
 %
-% The function relies on Apache's POI java archive (http://poi.apache.org)
-% which must be available in Matlab's java path. This can be done as
+% The function relies on Apache's POI Java archive (http://poi.apache.org)
+% which must be available in Matlab's Java path. This can be done as
 % follows:
 %
 %    javaaddpath('path/to/poi-library.jar')

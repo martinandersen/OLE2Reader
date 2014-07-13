@@ -18,9 +18,9 @@
 
 /* 
   Compile with: 
-     javac -cp path/to/poi-library.jar:. ReadOLE2Entry.java 
+     javac -cp $POI_JAR_FILE:. ReadOLE2Entry.java 
   or
-     javac -target 1.6 -cp path/to/poi-library.jar:. ReadOLE2Entry.java 
+     javac -target 1.6 -cp $POI_JAR_FILE:. ReadOLE2Entry.java 
 */
 
 import org.apache.poi.poifs.filesystem.DocumentEntry;
@@ -33,6 +33,20 @@ import java.nio.ShortBuffer;
 import java.nio.ByteOrder;
 
 public class ReadOLE2Entry {
+
+    public static double[] ReadDouble(DocumentEntry document) throws IOException {
+	DocumentInputStream stream = new DocumentInputStream(document);
+	int len = document.getSize();
+	byte[] buf = new byte[len];
+	double[] bufDbl = new double[len/8];
+	try {
+	    stream.readFully(buf, 0, len);
+	} finally {
+	    stream.close();
+	}
+	ByteBuffer.wrap(buf).order(ByteOrder.LITTLE_ENDIAN).asDoubleBuffer().get(bufDbl);
+	return bufDbl;
+    }
 
     public static int[] ReadInt(DocumentEntry document) throws IOException {
 	DocumentInputStream stream = new DocumentInputStream(document);
@@ -47,7 +61,6 @@ public class ReadOLE2Entry {
 	ByteBuffer.wrap(buf).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer().get(bufInt);
 	return bufInt;
     }
-
 
     public static short[] ReadShort(DocumentEntry document) throws IOException {
 	DocumentInputStream stream = new DocumentInputStream(document);

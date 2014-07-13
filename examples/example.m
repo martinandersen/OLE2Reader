@@ -17,5 +17,8 @@ arr_int = ole2_cat('testfile.ole2', 'IntFile', 'int');
 % Read document entry as float array
 arr_float = ole2_cat('testfile.ole2', 'FloatingPointData/FloatFile', 'float');
 
+% Read document entry as double array
+arr_double = ole2_cat('testfile.ole2', 'FloatingPointData/DoubleFile', 'double');
+
 % Read document entry as string
 s = ole2_cat('testfile.ole2', 'CharFile', 'str');

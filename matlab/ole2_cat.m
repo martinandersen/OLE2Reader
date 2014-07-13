@@ -8,9 +8,9 @@ function d = ole2_cat(filename, entry, rtype)
 %    and returns data as an array of type rtype (rtype can be 'byte',
 %    'short', 'int', 'float, or 'str').
 %
-% The function relies on Apache's POI java archive (http://poi.apache.org)
+% The function relies on Apache's POI Java archive (http://poi.apache.org)
 % and the Java class ReadOLE2Entry which must be available in
-% Matlab's java path. This can be done as follows:
+% Matlab's Java path. This can be done as follows:
 %
 %    javaaddpath('path/to/poi-library.jar')
 %    javaaddpath('../java/')   % path to ReadOLE2Entry.class
@@ -63,10 +63,14 @@ switch lower(rtype)
         d = typecast(ReadOLE2Entry.ReadInt(eptr),'uint32')';
     case 'float'
         d = typecast(ReadOLE2Entry.ReadInt(eptr),'single')';        
+    case 'single'
+        d = typecast(ReadOLE2Entry.ReadInt(eptr),'single')';
+    case 'double'
+        d = typecast(ReadOLE2Entry.ReadDouble(eptr),'double')';
     case 'str'
         d = cell(ReadOLE2Entry.ReadString(eptr));
     otherwise
-        disp('rtype must be "byte", "short", "int", "float", or "str"');
+        disp('rtype must be "byte", "short", "int", "float", "double", or "str"');
 end
 
 % clean up
