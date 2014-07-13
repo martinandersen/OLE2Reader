@@ -1,4 +1,4 @@
-javaaddpath('path/to/apache/poi-3.xx.jar')
+javaaddpath(getenv('POI_JAR_FILE'))
 javaaddpath('../java/')   % path to ReadOLE2Entry.class
 addpath('../matlab/')     % path to OLE2Reader Matlab routines
 
