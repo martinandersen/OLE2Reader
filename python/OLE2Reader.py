@@ -65,13 +65,16 @@ OLE2Reader.shutdownJVM()
 
 import jpype
 import numpy
+import os
 
 shutdownJVM = jpype.shutdownJVM
+POI_JAR_FILE = os.environ.get('POI_JAR_FILE')
 
-def startJVM(poifs_path, jvm_path = None):
-    """Start JVM with POIFS in the Java class path."""
+def startJVM(poi_jar_file = POI_JAR_FILE, jvm_path = None):
+    """Start JVM with Java POI jar file in the Java class path."""
+    if poi_jar_file is None: raise ValueError
     if jvm_path is None: jvm_path = jpype.getDefaultJVMPath()
-    jpype.startJVM(jvm_path,"-Djava.class.path="+poifs_path)
+    jpype.startJVM(jvm_path,"-Djava.class.path="+poi_jar_file)
     return
 
 class OLE2File(object):

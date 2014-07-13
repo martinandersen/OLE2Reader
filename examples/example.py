@@ -1,5 +1,14 @@
 import OLE2Reader
-OLE2Reader.startJVM(poifs_path = "path/to/java/poi-3.xx.jar")
+
+# Start JVM with Apache POI jar file in Java path
+
+# Method I: The environment variable POI_JAR_FILE contains 
+# the full path to the Apache POI jar file 
+print(OLE2Reader.POI_JAR_FILE)
+OLE2Reader.startJVM()  
+
+# Method II:
+# OLE2Reader.start_jvm(poi_jar_file = 'path/to/apache/poi-3.xx.jar')
 
 of = OLE2Reader.OLE2File('testfile.ole2')
 

@@ -6,7 +6,11 @@ Python and Matlab code for importing data from OLE 2 files
 
 Getting started
 ---------------
-The code is based on the [Apache POI Java library](http://poi.apache.org). To get started, download a copy of the binary distribution [here](http://poi.apache.org/download.html). You'll need version 3.11-beta (or a later version) in order to read files that are larger than 2 GB.
+The code is based on the [Apache POI Java library](http://poi.apache.org). To get started, download a copy of the binary distribution [here](http://poi.apache.org/download.html). You'll need version 3.11-beta (or a later version) in order to read files that are larger than 2 GB. After downloading the jar file, we recommend setting the environment variable `POI_JAR_FILE` to the full path of the jar file:
+
+```bash
+export POI_JAR_FILE=/path/to/apache/poi-3.xx.jar
+```
 
 
 Python 2.7
@@ -20,15 +24,25 @@ pip install JPype1 numpy
 ```
 
 #### Installation
+
 ```bash
 pip install https://github.com/martinandersen/OLE2Reader/archive/master.zip
 ```
 
 #### Code example
+
 ```python
-# Import OLE2Reader and start Java Virtual Machine (JVM)
 import OLE2Reader
-OLE2Reader.startJVM(poifs_path = "path/to/java/poi-3.xx.jar") 
+
+# Start JVM with Apache POI jar file in Java path
+
+# Method I: The environment variable POI_JAR_FILE contains 
+# the full path to the Apache POI jar file 
+print(OLE2Reader.POI_JAR_FILE)
+OLE2Reader.startJVM()  
+
+# Method II:
+# OLE2Reader.start_jvm(poi_jar_file = 'path/to/apache/poi-3.xx.jar')
 
 of = OLE2Reader.OLE2File('testfile.ole2')
 
@@ -60,11 +74,11 @@ of.close()
 OLE2Reader.shutdownJVM()
 ``` 
 
-
 Matlab
 ---------------
 
 #### Code example
+
 ```matlab
 % Set Matlab path and Matlab Java path
 javaaddpath('path/to/java/poi-3.xx.jar')
