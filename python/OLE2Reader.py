@@ -193,6 +193,13 @@ class OLE2File(object):
         arr = numpy.array(numpy.frombuffer(buffer(java_str.toString()),dtype='uint16'),dtype='uint8')
         return arr
 
+    def read(self, entry, dtype='uint8'):
+        """
+        Reads a document entry from the OLE 2 file system and returns
+        the data as a Numpy array of type 'dtype'.
+        """
+        return numpy.frombuffer(buffer(self.readBytes(entry)),dtype=dtype)
+    
     def readString(self, entry):
         """
         Reads a document entry from the OLE 2 file system and returns
@@ -205,22 +212,29 @@ class OLE2File(object):
         Reads a document entry from the OLE 2 file system and returns
         the data as a Numpy array of 16 bit unsigned integers.
         """
-        return numpy.frombuffer(buffer(self.readBytes(entry)),dtype='<h')
+        return self.read(entry, '<u2')
 
     def readInt(self, entry):
         """
         Reads a document entry from the OLE 2 file system and returns
         the data as a Numpy array of 32 bit unsigned integers.
         """
-        return numpy.frombuffer(buffer(self.readBytes(entry)),dtype='<i')
+        return self.read(entry, '<u4')
 
     def readFloat(self, entry):
         """
         Reads a document entry from the OLE 2 file system and returns
         the data as a Numpy array of 32 bit floats.
         """
-        return numpy.frombuffer(buffer(self.readBytes(entry)),dtype='<f')
+        return self.read(entry, '<f4')
 
+    def readDouble(self, entry):
+        """
+        Reads a document entry from the OLE 2 file system and returns
+        the data as a Numpy array of 64 bit floats.
+        """
+        return self.read(entry, '<f8')
+        
     def close(self):
         """
         Closes the OLE 2 file system.
