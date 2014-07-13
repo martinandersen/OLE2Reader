@@ -114,8 +114,7 @@ class OLE2File(object):
         are file and directory names. The values are either the file
         size in bytes or 'd' for directories.
         
-        If no path is given, the contents of the root directory are dis-
-        played.
+        If no path is given, the contents of the root directory are returned.
         """
         h = self._getEntry(path)
         if not h: raise IOError
@@ -129,6 +128,48 @@ class OLE2File(object):
                 else:
                     entries[e.getName()] = 'd'
         return entries
+
+    def tree(self, path='/'):
+        """
+        Returns the directory contents as a dictionary where the keys
+        are file and directory names. The values are either the file
+        size in bytes or a dictionary for directories.
+        
+        If no path is given, the contents of the root directory are returned.
+        """
+        T = self.ls(path)
+        stack = [(T,path)]
+        while len(stack) > 0:
+            Di,path = stack.pop()
+            for key,e in Di.iteritems():
+                if e == 'd':
+                    Di[key] = self.ls(path+'/'+key)
+                    stack.append((Di[key],path+'/'+key))
+        return T
+
+    def lstree(self, path='/'):
+        """
+        Prints a subtree.
+        """
+        T = self.tree(path)
+        stack = sorted(zip(T.keys(),T.values()),reverse=True)
+        indent = len(stack)*[(0,)]
+        indent[0] = (indent[0][0],None)
+        print("%s\n \\" % (path))
+        while len(stack) > 0:
+            k,v = stack.pop()
+            t = indent.pop()
+            if len(t) == 1:
+                print("%s |- %s " % (t[0]*" ",k))
+            else:
+                print("%s `- %s " % (t[0]*" ",k))
+            if type(v) is dict:
+                print("%s \\ " % ((4+t[0])*" "))
+                L = sorted(zip(v.keys(),v.values()),reverse=True)
+                stack.extend(L)
+                indent.extend(len(L)*[(t[0]+4,)])
+                indent[-len(L)] = (indent[-len(L)][0],None)
+        return
                 
     def readBytes(self, entry):
         """
