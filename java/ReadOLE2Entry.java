@@ -88,7 +88,7 @@ public class ReadOLE2Entry {
 	return buf;
     }
 
-    public static String[] ReadString(DocumentEntry document) throws IOException {
+    public static String ReadString(DocumentEntry document) throws IOException {
 	DocumentInputStream stream = new DocumentInputStream(document);
 	int len = document.getSize();
 	byte[] buf = new byte[len];
@@ -98,8 +98,6 @@ public class ReadOLE2Entry {
 	    stream.close();
 	}
 	String str = new String(buf);
-	String str2 = str.replace("\0"," ");
-	String[] strs = str2.split("  +");
-	return strs;
+	return str;
     }
 }

@@ -68,7 +68,7 @@ switch lower(rtype)
     case 'double'
         d = typecast(ReadOLE2Entry.ReadDouble(eptr),'double')';
     case 'str'
-        d = cell(ReadOLE2Entry.ReadString(eptr));
+        d = char(ReadOLE2Entry.ReadString(eptr));
     otherwise
         disp('rtype must be "byte", "short", "int", "float", "double", or "str"');
 end

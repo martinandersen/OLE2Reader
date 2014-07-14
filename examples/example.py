@@ -19,7 +19,7 @@ of.lstree()
 s = of.readString('CharFile')
 
 # Read document entry as a Numpy uint8 array
-arr_char = of.readBytes('ByteFile')
+arr_byte = of.readBytes('ByteFile')
 
 # Read document entry as a Numpy uint16 array
 arr_short = of.readShort('ShortFile')
