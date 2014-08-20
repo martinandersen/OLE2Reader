@@ -20,7 +20,7 @@ Python 2.7
 In addition to the [Apache POI Java library](http://poi.apache.org), the Python code requires the Python packages [Numpy](http://www.numpy.org) and [JPype](https://github.com/originell/jpype) which must be installed separately. This can be done using [pip](https://github.com/pypa/pip):
 
 ```bash
-pip install JPype1 numpy
+pip install numpy Jpype1
 ```
 
 #### Installation

@@ -72,7 +72,8 @@ POI_JAR_FILE = os.environ.get('POI_JAR_FILE')
 
 def startJVM(poi_jar_file = POI_JAR_FILE, jvm_path = None):
     """Start JVM with Java POI jar file in the Java class path."""
-    if poi_jar_file is None: raise ValueError
+    if jpype.isJVMStarted(): return
+    if poi_jar_file is None: raise ValueError, "poi_jar_file undefined"
     if jvm_path is None: jvm_path = jpype.getDefaultJVMPath()
     jpype.startJVM(jvm_path,"-Djava.class.path="+poi_jar_file)
     return
@@ -85,9 +86,9 @@ class OLE2File(object):
     libraries.
     """
 
-    def __init__(self, filename, buffer_size = None):
+    def __init__(self, filename, buffer_size = None, **kwargs):
         """Opens an OLE 2 file system."""
-
+        startJVM(poi_jar_file=kwargs.get('poi_jar_file',POI_JAR_FILE),jvm_path=kwargs.get('jvm_path',None))
         self._filename = filename
         File = jpype.JClass('java.io.File')
         self._fp = File(jpype.JString(filename))
@@ -192,10 +193,10 @@ class OLE2File(object):
         stream.readFully(buf, 0, nbytes);
         stream.close();
 
-        java_str = jpype._jclass.JClass('java.lang.String')(buf, 0, nbytes, 'ISO-8859-1')        
-        arr = numpy.array(numpy.frombuffer(buffer(java_str.toString()),dtype='uint16'),dtype='uint8')
+        arr = numpy.zeros(nbytes,dtype='uint8')
+        arr[:] = buf[:nbytes]
         return arr
-
+        
     def read(self, entry, dtype='uint8'):
         """
         Reads a document entry from the OLE 2 file system and returns
