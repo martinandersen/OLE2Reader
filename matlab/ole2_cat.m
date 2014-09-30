@@ -42,6 +42,12 @@ end
 % open file and find document handle
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import ReadOLE2Entry;
+if strfind(filename, '~') == 1
+    [filepath, name, ext] = fileparts(filename);
+    % expand filepath to an absolute path
+    filepath = cd(cd(filepath));
+    filename = fullfile(filepath, [name ext]);
+end
 fp = java.io.File(filename);
 fs = NPOIFSFileSystem(fp);
 eptr = fs.getRoot();
