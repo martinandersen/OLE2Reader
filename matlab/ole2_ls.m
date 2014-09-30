@@ -38,6 +38,12 @@ function varargout = ole2_ls(filename, d)
 
 % open file and find directory handle
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
+if strfind(filename, '~') == 1
+    [filepath, name, ext] = fileparts(filename);
+    % expand filepath to an absolute path
+    filepath = cd(cd(filepath));
+    filename = fullfile(filepath, [name ext]);
+end
 fp = java.io.File(filename);
 fs = NPOIFSFileSystem(fp);
 dptr = fs.getRoot();
