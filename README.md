@@ -1,5 +1,8 @@
 OLE2Reader
 ==========
+* * *
+*This project is no longer maintained. Python users may use the [olefile](https://github.com/decalage2/olefile) package instead.*
+* * *
 
 Python and Matlab code for importing data from OLE 2 files
 
